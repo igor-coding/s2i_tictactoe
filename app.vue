@@ -54,7 +54,7 @@ const replay = () => {
 
 <template>
   <main
-    class="overflow-hidden h-screen w-screen p-6 md:space-y-20 flex flex-col items-center justify-around md:justify-center text-center">
+    class="h-screen w-screen p-6 md:space-y-20 flex flex-col items-center justify-around md:justify-center text-center">
     <div class="space-y-2">
       <h1 class="text-6xl font-bold">Tic Tac Toe</h1>
     </div>

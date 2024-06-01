@@ -4,6 +4,6 @@
 
 @layer base {
   body {
-    @apply bg-[#D3D1C0] text-black;
+    @apply overflow-hidden bg-[#D3D1C0] text-black;
   }
 }
