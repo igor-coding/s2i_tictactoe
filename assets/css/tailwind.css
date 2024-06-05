@@ -4,6 +4,6 @@
 
 @layer base {
   body {
-    @apply overflow-hidden bg-[#D3D1C0] text-black;
+    @apply flex h-screen w-screen flex-col items-center justify-center overflow-hidden bg-[#D3D1C0] p-6 text-center text-black;
   }
 }
