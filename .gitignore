@@ -14,12 +14,9 @@ logs
 *.log
 
 # Misc
-.DS_Store
-**/.DS_Store
 .fleet
 .idea
 
-# Local env files
-.env
-.env.*
-!.env.example
+# Mac specific
+.DS_Store
+**/.DS_Store

@@ -1,75 +1,15 @@
-# Nuxt 3 Minimal Starter
+# A Tic Tac Toe game
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Link to the website → _[Tic Tac Toe](https://s2i-tictactoe.vercel.app/)_
 
-## Setup
+![showcase.png](./public/showcase.png)
 
-Make sure to install the dependencies:
+This project is developed using _Nuxt_(a _Vue_ framework) and Tailwind CSS.
 
-```bash
-# npm
-npm install
+## How to play
 
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+- Click on any box to start the game(the first move always starts with the _cross_)
+- The second move is the opponent's and so on alternating
+- To win you need to have _cross_ or _nought_ three times on the same line
+  (vertically, horizontally or diagonally)
+- The _REPLAY_ button will reset the game
