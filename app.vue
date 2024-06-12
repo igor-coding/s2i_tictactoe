@@ -42,6 +42,12 @@ const replay = () => {
   currentPlayer.value = "X";
   board.value = Array(9).fill("");
 };
+
+const replayBg = computed(() => {
+  return winner.value || tie.value || isBoardFull.value
+    ? "bg-red-500"
+    : "bg-transparent";
+});
 </script>
 
 <template>
@@ -69,7 +75,10 @@ const replay = () => {
         </span>
         <button
           @click="replay"
-          class="rounded-3xl border-2 border-black bg-red-500 px-6 font-bold uppercase"
+          :class="[
+            'rounded-3xl border-2 border-black px-6 font-bold uppercase',
+            replayBg,
+          ]"
         >
           replay
         </button>
