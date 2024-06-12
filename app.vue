@@ -1,26 +1,26 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, h } from "vue";
 import { Icon } from "#components";
 
 const cross = h(Icon, { name: "mdi:close" });
 const nought = h(Icon, { name: "mdi:checkbox-blank-circle-outline" });
 
 const currentPlayer = ref("X");
-const board = ref([[""], [""], [""], [""], [""], [""], [""], [""], [""]]);
+const board = ref(Array(9).fill(""));
+
+const winningCombinations = [
+  [0, 1, 2],
+  [3, 4, 5],
+  [6, 7, 8],
+  [0, 3, 6],
+  [1, 4, 7],
+  [2, 5, 8],
+  [0, 4, 8],
+  [2, 4, 6],
+];
 
 const calculateWinner = (board) => {
-  const lines = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-  ];
-
-  for (const [a, b, c] of lines) {
+  for (const [a, b, c] of winningCombinations) {
     if (board[a] && board[a] === board[b] && board[a] === board[c]) {
       return board[a];
     }
@@ -28,47 +28,45 @@ const calculateWinner = (board) => {
   return null;
 };
 
-const winner = computed(() => calculateWinner(board.value.flat()));
-const isBoardFull = computed(() =>
-  board.value.flat().every((cell) => cell !== ""),
-);
+const winner = computed(() => calculateWinner(board.value));
+const isBoardFull = computed(() => board.value.every((cell) => cell !== ""));
 const tie = computed(() => isBoardFull.value && !winner.value);
 
-const makeMove = (x, y) => {
-  if (winner.value || board.value[x][y]) return;
-  board.value[x][y] = currentPlayer.value;
+const makeMove = (index) => {
+  if (winner.value || board.value[index]) return;
+  board.value[index] = currentPlayer.value;
   currentPlayer.value = currentPlayer.value === "X" ? "O" : "X";
 };
 
 const replay = () => {
-  board.value = [[""], [""], [""], [""], [""], [""], [""], [""], [""]];
   currentPlayer.value = "X";
+  board.value = Array(9).fill("");
 };
 </script>
 
 <template>
-  <main class="flex flex-col justify-around space-y-20">
+  <main class="grid space-y-20">
     <h1 class="text-6xl font-bold">Tic Tac Toe</h1>
-    <div class="flex flex-col gap-4">
-      <div class="flex justify-between">
-        <p
-          class="pointer-default select-none rounded-3xl border-2 border-black bg-teal-500 px-6 font-bold uppercase"
+    <div>
+      <div class="mb-4 flex justify-between">
+        <span
           v-if="!winner && !tie"
+          class="pointer-default select-none rounded-3xl border-2 border-black bg-teal-500 px-6 font-bold uppercase"
         >
-          {{ currentPlayer }} turn
-        </p>
-        <p
+          <strong class="mr-1">{{ currentPlayer }}</strong> turn
+        </span>
+        <span
           v-if="winner"
           class="rounded-3xl border-2 border-black bg-teal-500 px-6 font-bold uppercase"
         >
-          {{ winner }} wins!
-        </p>
-        <p
+          <strong class="mr-1">{{ winner }}</strong> wins!
+        </span>
+        <span
           v-else-if="tie"
           class="rounded-3xl border-2 border-black bg-teal-500 px-6 font-bold uppercase"
         >
-          It's a tie!
-        </p>
+          it's a tie!
+        </span>
         <button
           @click="replay"
           class="rounded-3xl border-2 border-black bg-red-500 px-6 font-bold uppercase"
@@ -77,20 +75,18 @@ const replay = () => {
         </button>
       </div>
       <div class="grid grid-cols-3 gap-4">
-        <div v-for="(row, rowIndex) in board" :key="rowIndex" class="flex">
-          <div
-            v-for="(cell, colIndex) in row"
-            :key="colIndex"
-            @click="makeMove(rowIndex, colIndex)"
-            :class="[
-              'flex h-24 w-24 cursor-pointer items-center justify-center rounded-2xl border-2 border-b-4 border-black text-6xl hover:border-b-2 hover:bg-[#C8C5B6]',
-              { 'text-red-500': cell === 'X', 'text-teal-500': cell === 'O' },
-            ]"
-          >
-            <component
-              :is="cell === 'X' ? cross : cell === 'O' ? nought : 'span'"
-            />
-          </div>
+        <div
+          v-for="(cell, index) in board"
+          :key="index"
+          @click="makeMove(index)"
+          :class="[
+            'flex h-24 w-24 cursor-pointer items-center justify-center rounded-2xl border-2 border-b-4 border-black text-6xl hover:border-b-2 hover:bg-[#C8C5B6]',
+            { 'text-red-500': cell === 'X', 'text-teal-500': cell === 'O' },
+          ]"
+        >
+          <component
+            :is="cell === 'X' ? cross : cell === 'O' ? nought : 'span'"
+          />
         </div>
       </div>
     </div>
